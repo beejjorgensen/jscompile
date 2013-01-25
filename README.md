@@ -9,7 +9,7 @@ line and ability to specify multiple input source files.
     usage: jscompile [options] infile [infile2 ...]
     
     options:
-        --output file    -o file    Set output file name [default stdout]
+        --output file    -o file    set output file name [default stdout]
         --closure        -c         use Closure compiler [default]
         --yuicompressor  -y         use YUICompressor
         --uglifyjs       -u         use UglifyJS

@@ -44,7 +44,7 @@ function usage {
 	if [ $# -eq 0 ]; then
 		printf "usage: $SCRIPTNAME [options] infile [infile2 ...]\n" 1>&2
 		printf "\noptions:\n" 1>&2
-		printf -- "    --output file    -o file    Set output file name [default stdout]\n" 1>&2
+		printf -- "    --output file    -o file    set output file name [default stdout]\n" 1>&2
 		printf -- "    --closure        -c         use Closure compiler [default]\n" 1>&2
 		printf -- "    --yuicompressor  -y         use YUICompressor\n" 1>&2
 		printf -- "    --uglifyjs       -u         use UglifyJS\n" 1>&2
@@ -121,7 +121,7 @@ while [ $# -ne 0 ]; do
 				usage "not found: $1" 3
 			fi
 
-			infiles="${infiles}$1\n"
+			infiles="${infiles}$1"$'\n'
 			;;
 	esac
 
@@ -141,7 +141,7 @@ fi
 case "$app" in
 	"closure")
 		command="closure $preopt"
-		for f in $(printf $infiles); do
+		for f in $infiles; do
 			command="$command --js \"$f\""
 		done
 		if [ "x$outfilename" != "x" ]; then
@@ -156,7 +156,7 @@ case "$app" in
 			rm -f "$outfilename"
 		fi
 
-		for f in $(printf $infiles); do
+		for f in $infiles; do
 			if [ "x$outfilename" != "x" ]; then
 				$app $preopt "$f" >> "$outfilename"
 				printf "\n" >> "$outfilename"
