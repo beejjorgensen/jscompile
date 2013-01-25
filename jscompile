@@ -171,10 +171,10 @@ case "$app" in
 
 		for f in $infiles; do
 			if [ "x$outfilename" != "x" ]; then
-				$app $preopt "$f" >> "$outfilename"
+				$app $preopt "$f" $postopt >> "$outfilename"
 				printf "\n" >> "$outfilename"
 			else
-				$app $preopt "$f"
+				$app $preopt "$f" $postopt
 				printf "\n"
 			fi
 		done
