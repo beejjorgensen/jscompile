@@ -76,6 +76,8 @@ infiles=""
 outfilename=""
 preopt=""
 postopt=""
+fileopt=""
+outopt=""
 
 # Check for environment variables
 case "x$JSCOMPILE_COMPILER" in
@@ -105,7 +107,6 @@ while [ $# -ne 0 ]; do
 			;;
 		"--uglifyjs"|"-u")
 			app=uglifyjs
-			postopt="--mangle --compress"
 			;;
 		"--cat"|"-t")
 			app=cat
@@ -129,6 +130,18 @@ while [ $# -ne 0 ]; do
 	shift
 done
 
+# Figure out any additional command line arguments needed
+case "$app" in
+	"closure")
+		fileopt="--js"
+		outopt="--js_output_file"
+		;;
+	"uglifyjs")
+		postopt="--mangle --compress"
+		outopt="--output"
+		;;
+esac
+
 if [ "x$infiles" = "x" ]; then
 	usage
 fi
@@ -140,25 +153,13 @@ fi
 
 # Execute!
 case "$app" in
-	"closure")
+	"closure"|"uglifyjs")
 		command=""
 		for f in $infiles; do
-			command="$command --js \"$f\""
+			command="$command $fileopt \"$f\""
 		done
 		if [ "x$outfilename" != "x" ]; then
-			command="$command --js_output_file \"$outfilename\""
-		fi
-
-		eval $app $preopt $command $postopt
-		;;
-
-	"uglifyjs")
-		command=""
-		for f in $infiles; do
-			command="$command \"$f\""
-		done
-		if [ "x$outfilename" != "x" ]; then
-			command="$command --output \"$outfilename\""
+			command="$command $outopt \"$outfilename\""
 		fi
 
 		eval $app $preopt $command $postopt
