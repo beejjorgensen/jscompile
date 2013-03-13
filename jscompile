@@ -81,7 +81,7 @@ outopt=""
 
 # Check for environment variables
 case "x$JSCOMPILE_COMPILER" in
-	"xclosure"|"xyuicompressor"|"xuglifyjs"|"cat")
+	"xclosure"|"xyuicompressor"|"xuglifyjs"|"xcat")
 		app="$JSCOMPILE_COMPILER"
 		;;
 	"x") ;;
